@@ -20,7 +20,8 @@ public class ListsContext : DbContext
                 entity.HasKey(e => e.Id);
                 entity.HasMany<ListItemRecord>(l => l.Items)
                     .WithOne()
-                    .HasForeignKey(li => li.ListId);
+                    .HasForeignKey(li => li.ListId)
+                    .OnDelete(DeleteBehavior.Cascade);
             }
         );
 
@@ -29,7 +30,8 @@ public class ListsContext : DbContext
                 entity.HasKey(e => e.Id);
                 entity.HasMany<ListRecord>(u => u.Lists)
                     .WithOne()
-                    .HasForeignKey(l => l.OwnerId);
+                    .HasForeignKey(l => l.OwnerId)
+                    .OnDelete(DeleteBehavior.Cascade);
             }
         );
     }
