@@ -9,11 +9,11 @@
       - "5001:5001"
 
   api.database:
-      image: postgres:latest
-      container_name: api.database
-      environment:
-        - POSTGRES_DB=Lists2
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=malymimek
-      ports:
-        - 5432:5432
+    image: postgres:latest
+    container_name: api.database
+    environment:
+      - POSTGRES_DB=Lists2
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=malymimek
+    ports:
+      - 5432:5432

@@ -16,8 +16,9 @@ public class GetUsers : ControllerBase
     }
 
     [HttpGet(Name = "GetUsers")]
-    public async Task<List<UserRecord>> Get()
+    public List<UserRecord> Get()
     {
-        return [];
+        var users = _database.Users.ToList();
+        return users;
     }
 }
