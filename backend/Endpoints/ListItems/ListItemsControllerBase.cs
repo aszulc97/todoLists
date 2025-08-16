@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Features.ListItems;
+namespace Api.Endpoints.ListItems;
 
 [ApiController]
 [Route("api/list-items")]

@@ -1,8 +1,7 @@
-using Api.Database;
-using Api.Database.Models;
+using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Features.ListItems;
+namespace Api.Endpoints.ListItems;
 
 public class CreateListItem : ListItemsControllerBase
 {
@@ -15,18 +14,22 @@ public class CreateListItem : ListItemsControllerBase
 
     [HttpPost]
     public async Task<Guid> Create(
-        [FromBody] Guid listId,
-        [FromBody] string title
+        [FromBody] CreateListItemRequest createListItemRequest
     )
     {
         var listItem = new ListItemRecord
         {
-            ListId = listId,
-            Title = title,
+            ListId = createListItemRequest.ListId,
+            Title = createListItemRequest.Title,
             Status = ListItemStatus.Todo
         };
         _database.Add(listItem);
         await _database.SaveChangesAsync();
         return listItem.Id;
     }
+
+    public new record CreateListItemRequest(
+        Guid ListId,
+        string Title
+    );
 }

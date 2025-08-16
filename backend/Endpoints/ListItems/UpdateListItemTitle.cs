@@ -1,7 +1,6 @@
-using Api.Database;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Features.ListItems;
+namespace Api.Endpoints.ListItems;
 
 public class UpdateListItemTitle : ListItemsControllerBase
 {
@@ -19,9 +18,8 @@ public class UpdateListItemTitle : ListItemsControllerBase
     )
     {
         //ensure user is allowed to do it
-        var listItem = _database.ListItems.Single(li=>li.Id ==  listItemId);
+        var listItem = _database.ListItems.Single(li => li.Id == listItemId);
         listItem.Title = title;
         await _database.SaveChangesAsync();
     }
-
 }

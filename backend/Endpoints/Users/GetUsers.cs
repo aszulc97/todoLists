@@ -1,8 +1,7 @@
-using Api.Database;
-using Api.Database.Models;
+using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Features.Users;
+namespace Api.Endpoints.Users;
 
 [ApiController]
 [Route("api/users")]

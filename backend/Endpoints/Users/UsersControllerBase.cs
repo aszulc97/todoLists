@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Features.Users;
+namespace Api.Endpoints.Users;
 
 [ApiController]
 [Route("api/users")]

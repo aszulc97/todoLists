@@ -1,7 +1,6 @@
-using Api.Database;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Features.Lists;
+namespace Api.Endpoints.Lists;
 
 public class DeleteList : ListsControllerBase
 {
@@ -11,15 +10,14 @@ public class DeleteList : ListsControllerBase
     {
         _database = database;
     }
-    
-    [HttpDelete("{listId:guid}", Name="DeleteList")]
+
+    [HttpDelete("{listId:guid}", Name = "DeleteList")]
     public async Task Delete(
         [FromRoute] Guid listId)
 
     {
-        var list = _database.Lists.Single(l=>l.Id == listId);
+        var list = _database.Lists.Single(l => l.Id == listId);
         _database.Lists.Remove(list);
         await _database.SaveChangesAsync();
     }
-    
 }

@@ -1,8 +1,7 @@
-using Api.Database;
-using Api.Database.Models;
+using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Features.Lists;
+namespace Api.Endpoints.Lists;
 
 public class GetListById : ListsControllerBase
 {
@@ -13,8 +12,8 @@ public class GetListById : ListsControllerBase
         _database = database;
     }
 
-    [HttpGet("{listId:guid}", Name = "GetListsForUser")]
-    public ListRecord Get(
+    [HttpGet("{listId:guid}")]
+    public ListRecord GetList(
         [FromRoute] Guid listId)
     {
         var list = _database.Lists.Single(l => l.Id == listId);

@@ -1,8 +1,7 @@
-using Api.Database;
-using Api.Database.Models;
+using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Features.ListItems;
+namespace Api.Endpoints.ListItems;
 
 public class UpdateListItemStatus : ListItemsControllerBase
 {
@@ -20,9 +19,8 @@ public class UpdateListItemStatus : ListItemsControllerBase
     )
     {
         //ensure user is allowed to do it
-        var listItem = _database.ListItems.Single(li=>li.Id ==  listItemId);
+        var listItem = _database.ListItems.Single(li => li.Id == listItemId);
         listItem.Status = status;
         await _database.SaveChangesAsync();
     }
-            
 }

@@ -1,10 +1,10 @@
-using Api.Database;
-using Api.Database.Models;
+using Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace Api.Features.Lists;
+namespace Api.Endpoints.Users;
 
-public class GetListsForUser : ListsControllerBase
+public class GetListsForUser : UsersControllerBase
 {
     private readonly ListsContext _database;
 
@@ -17,7 +17,7 @@ public class GetListsForUser : ListsControllerBase
     public List<ListRecord> Get(
         [FromQuery] Guid userId)
     {
-        var lists = _database.Lists.Where(l => l.Owner.Id == userId).ToList();
-        return lists;
+        var user = _database.Users.Include(u => u.Lists).Single(u => u.Id == userId);
+        return user.Lists;
     }
 }

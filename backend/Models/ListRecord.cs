@@ -1,17 +1,18 @@
-namespace Api.Database.Models;
+namespace Api.Models;
 
 public class ListRecord
 {
     public Guid Id { get; set; }
     public required string Name { get; set; }
     public List<ListItemRecord> Items { get; set; } = [];
-    public UserRecord Owner { get; set; }
+    public required Guid OwnerId { get; set; }
 }
 
 public class UserRecord
 {
     public Guid Id { get; set; }
     public required string Name { get; set; }
+    public List<ListRecord> Lists { get; set; } = [];
 }
 
 public class ListItemRecord

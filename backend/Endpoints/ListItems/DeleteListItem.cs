@@ -1,7 +1,6 @@
-using Api.Database;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Features.ListItems;
+namespace Api.Endpoints.ListItems;
 
 public class DeleteListItem : ListItemsControllerBase
 {
@@ -15,7 +14,7 @@ public class DeleteListItem : ListItemsControllerBase
     [HttpDelete("{listItemId}")]
     public async Task Delete([FromRoute] Guid listItemId)
     {
-        var listItem = _database.ListItems.Single(li=>li.Id == listItemId);
+        var listItem = _database.ListItems.Single(li => li.Id == listItemId);
         _database.ListItems.Remove(listItem);
         await _database.SaveChangesAsync();
     }
