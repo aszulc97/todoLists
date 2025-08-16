@@ -1,28 +1,27 @@
 using Api.Database;
-using Api.Database.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Features.ListItems;
 
-public class UpdateListItemStatus : ListItemsControllerBase
+public class UpdateListItemTitle : ListItemsControllerBase
 {
     private readonly ListsContext _database;
 
-    public UpdateListItemStatus(ListsContext database)
+    public UpdateListItemTitle(ListsContext database)
     {
         _database = database;
     }
 
-    [HttpPut("{listItemId:guid}/status")]
+    [HttpPut("{listItemId:guid}/title")]
     public async Task Update(
         [FromRoute] Guid listItemId,
-        [FromBody] ListItemStatus status
+        [FromBody] string title
     )
     {
         //ensure user is allowed to do it
         var listItem = _database.ListItems.Single(li=>li.Id ==  listItemId);
-        listItem.Status = status;
+        listItem.Title = title;
         await _database.SaveChangesAsync();
     }
-            
+
 }
