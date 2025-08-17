@@ -12,6 +12,9 @@ public class CreateUser : UsersControllerBase
         _database = database;
     }
 
+    /// <summary>
+    /// Creates a new user
+    /// </summary>
     [HttpPost]
     public async Task<Guid> Create(
         [FromBody] string name

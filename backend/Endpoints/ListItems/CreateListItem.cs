@@ -12,6 +12,9 @@ public class CreateListItem : ListItemsControllerBase
         _database = database;
     }
 
+    /// <summary>
+    /// Adds a new item to an existing To do list
+    /// </summary>
     [HttpPost]
     public async Task<Guid> Create(
         [FromBody] CreateListItemRequest createListItemRequest

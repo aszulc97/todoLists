@@ -12,12 +12,17 @@ public class GetLists : ListsControllerBase
         _database = database;
     }
 
+    /// <summary>
+    /// Returns a list of all To do lists for a given userId
+    /// </summary>
     [HttpGet("user/{userId:guid}")]
     public List<SimpleListDto> Get(
         [FromRoute] Guid userId)
     {
         var user = _database.Users.Include(u => u.Lists)
-            .Single(u => u.Id == userId);
+            .SingleOrDefault(u => u.Id == userId);
+        if (user == null)
+            throw new Exception("User not found");
         return user.Lists.Select(l => new SimpleListDto(
             l.Id,
             l.Name

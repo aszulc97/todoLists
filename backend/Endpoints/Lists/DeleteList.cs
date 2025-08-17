@@ -11,6 +11,9 @@ public class DeleteList : ListsControllerBase
         _database = database;
     }
 
+    /// <summary>
+    /// Deletes a To do list
+    /// </summary>
     [HttpDelete("{listId:guid}", Name = "DeleteList")]
     public async Task Delete(
         [FromRoute] Guid listId)
@@ -19,7 +22,7 @@ public class DeleteList : ListsControllerBase
         var list = _database.Lists.SingleOrDefault(l => l.Id == listId);
         if (list == null)
             throw new Exception("List not found");
-        
+
         _database.Lists.Remove(list);
         await _database.SaveChangesAsync();
     }

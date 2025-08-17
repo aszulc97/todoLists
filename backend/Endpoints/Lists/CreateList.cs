@@ -12,6 +12,9 @@ public class CreateList : ListsControllerBase
         _database = database;
     }
 
+/// <summary>
+/// Creates a new To do list with a given user as an owner
+/// </summary>
     [HttpPost(Name = "CreateList")]
     public async Task<Guid> Create(
         [FromBody] CreateListRequest request
@@ -20,7 +23,7 @@ public class CreateList : ListsControllerBase
         var user = _database.Users.SingleOrDefault(u => u.Id == request.OwnerId);
         if (user == null)
             throw new Exception("User not found");
-        
+
         var list = new ListRecord
         {
             Name = request.Name,
@@ -30,7 +33,7 @@ public class CreateList : ListsControllerBase
         await _database.SaveChangesAsync();
         return list.Id;
     }
-
+    
     public record CreateListRequest(
         Guid OwnerId,
         string Name

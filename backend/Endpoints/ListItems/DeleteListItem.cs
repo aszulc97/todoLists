@@ -11,6 +11,9 @@ public class DeleteListItem : ListItemsControllerBase
         _database = database;
     }
 
+    /// <summary>
+    /// Deletes an item from a list
+    /// </summary>
     [HttpDelete("{listItemId}")]
     public async Task Delete([FromRoute] Guid listItemId)
     {

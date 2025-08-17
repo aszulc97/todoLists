@@ -11,6 +11,9 @@ public class UpdateListItemTitle : ListItemsControllerBase
         _database = database;
     }
 
+    /// <summary>
+    /// Updates item's title
+    /// </summary>
     [HttpPut("{listItemId:guid}/title")]
     public async Task Update(
         [FromRoute] Guid listItemId,

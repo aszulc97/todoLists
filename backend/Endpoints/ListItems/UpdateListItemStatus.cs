@@ -12,6 +12,9 @@ public class UpdateListItemStatus : ListItemsControllerBase
         _database = database;
     }
 
+    /// <summary>
+    /// Updates an item's status. 0 - To do; 1 - Done
+    /// </summary>
     [HttpPut("{listItemId:guid}/status")]
     public async Task Update(
         [FromRoute] Guid listItemId,
