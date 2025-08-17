@@ -1,4 +1,4 @@
-Thhe project requires .NET SDK 8.0
+The project requires .NET SDK 8.0
 
 To run the application, you need to:
 1. Run Docker
