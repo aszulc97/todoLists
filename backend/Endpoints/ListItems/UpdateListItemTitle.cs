@@ -17,8 +17,9 @@ public class UpdateListItemTitle : ListItemsControllerBase
         [FromBody] string title
     )
     {
-        //ensure user is allowed to do it
-        var listItem = _database.ListItems.Single(li => li.Id == listItemId);
+        var listItem = _database.ListItems.SingleOrDefault(li => li.Id == listItemId);
+        if (listItem == null)
+            throw new Exception("List item not found");
         listItem.Title = title;
         await _database.SaveChangesAsync();
     }

@@ -17,9 +17,12 @@ public class CreateListItem : ListItemsControllerBase
         [FromBody] CreateListItemRequest createListItemRequest
     )
     {
+        var list = _database.Lists.SingleOrDefault(l => l.Id == createListItemRequest.ListId);
+        if (list == null)
+            throw new Exception("List not found");
         var listItem = new ListItemRecord
         {
-            ListId = createListItemRequest.ListId,
+            ListId = list.Id,
             Title = createListItemRequest.Title,
             Status = ListItemStatus.Todo
         };
@@ -28,7 +31,7 @@ public class CreateListItem : ListItemsControllerBase
         return listItem.Id;
     }
 
-    public new record CreateListItemRequest(
+    public record CreateListItemRequest(
         Guid ListId,
         string Title
     );

@@ -14,10 +14,23 @@ public class GetListById : ListsControllerBase
     }
 
     [HttpGet("{listId:guid}")]
-    public ListRecord GetList(
+    public ListDto GetList(
         [FromRoute] Guid listId)
     {
-        var list = _database.Lists.Include(l=>l.Items).Single(l => l.Id == listId);
-        return list;
+        var list = _database.Lists.Include(l => l.Items).SingleOrDefault(l => l.Id == listId);
+        if  (list == null)
+            throw new Exception("List not found");
+        return new ListDto(
+            list.Id,
+            list.Items.Select(li => new ListItemDto(
+                li.Id,
+                li.Title,
+                li.Status
+            ))
+        );
     }
+
+    public new record ListDto(Guid ListId, IEnumerable<ListItemDto> ListItems);
+
+    public new record ListItemDto(Guid ListItemId, string Title, ListItemStatus Status);
 }

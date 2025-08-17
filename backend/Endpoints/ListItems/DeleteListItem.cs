@@ -14,7 +14,9 @@ public class DeleteListItem : ListItemsControllerBase
     [HttpDelete("{listItemId}")]
     public async Task Delete([FromRoute] Guid listItemId)
     {
-        var listItem = _database.ListItems.Single(li => li.Id == listItemId);
+        var listItem = _database.ListItems.SingleOrDefault(li => li.Id == listItemId);
+        if (listItem == null)
+            throw new Exception("List item not found");
         _database.ListItems.Remove(listItem);
         await _database.SaveChangesAsync();
     }

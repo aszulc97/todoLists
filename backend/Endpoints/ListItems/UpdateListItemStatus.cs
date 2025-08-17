@@ -18,8 +18,12 @@ public class UpdateListItemStatus : ListItemsControllerBase
         [FromBody] ListItemStatus status
     )
     {
-        //ensure user is allowed to do it
-        var listItem = _database.ListItems.Single(li => li.Id == listItemId);
+        var listItem = _database.ListItems.SingleOrDefault(li => li.Id == listItemId);
+        if (listItem == null)
+            throw new Exception("List item not found");
+        var isCorrectStatus = Enum.IsDefined(typeof(ListItemStatus), status);
+        if (!isCorrectStatus)
+            throw new Exception($"Status '{status}' is not defined");
         listItem.Status = status;
         await _database.SaveChangesAsync();
     }

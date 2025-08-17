@@ -1,4 +1,3 @@
-using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +13,16 @@ public class GetLists : ListsControllerBase
     }
 
     [HttpGet("user/{userId:guid}")]
-    public List<ListRecord> Get(
+    public List<SimpleListDto> Get(
         [FromRoute] Guid userId)
     {
-        var user = _database.Users.Include(u => u.Lists).Single(u => u.Id == userId);
-        return user.Lists;
+        var user = _database.Users.Include(u => u.Lists)
+            .Single(u => u.Id == userId);
+        return user.Lists.Select(l => new SimpleListDto(
+            l.Id,
+            l.Name
+        )).ToList();
     }
+
+    public record SimpleListDto(Guid Id, string Name);
 }

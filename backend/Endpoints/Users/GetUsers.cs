@@ -13,9 +13,11 @@ public class GetUsers : UsersControllerBase
     }
 
     [HttpGet(Name = "GetUsers")]
-    public List<UserRecord> Get()
+    public List<UserDto> Get()
     {
         var users = _database.Users.ToList();
-        return users;
+        return users.Select(u=> new UserDto(u.Id, u.Name)).ToList();
     }
+    
+    public record UserDto(Guid Id, string Name);
 }

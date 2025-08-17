@@ -17,6 +17,10 @@ public class CreateList : ListsControllerBase
         [FromBody] CreateListRequest request
     )
     {
+        var user = _database.Users.SingleOrDefault(u => u.Id == request.OwnerId);
+        if (user == null)
+            throw new Exception("User not found");
+        
         var list = new ListRecord
         {
             Name = request.Name,

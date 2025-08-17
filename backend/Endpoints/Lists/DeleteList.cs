@@ -16,7 +16,10 @@ public class DeleteList : ListsControllerBase
         [FromRoute] Guid listId)
 
     {
-        var list = _database.Lists.Single(l => l.Id == listId);
+        var list = _database.Lists.SingleOrDefault(l => l.Id == listId);
+        if (list == null)
+            throw new Exception("List not found");
+        
         _database.Lists.Remove(list);
         await _database.SaveChangesAsync();
     }
