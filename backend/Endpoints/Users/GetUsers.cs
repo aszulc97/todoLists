@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Endpoints.Users;
 
-[ApiController]
-[Route("api/users")]
-public class GetUsers : ControllerBase
+public class GetUsers : UsersControllerBase
 {
     private readonly ListsContext _database;
 

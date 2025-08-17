@@ -1,5 +1,6 @@
 using Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Endpoints.Lists;
 
@@ -16,7 +17,7 @@ public class GetListById : ListsControllerBase
     public ListRecord GetList(
         [FromRoute] Guid listId)
     {
-        var list = _database.Lists.Single(l => l.Id == listId);
+        var list = _database.Lists.Include(l=>l.Items).Single(l => l.Id == listId);
         return list;
     }
 }

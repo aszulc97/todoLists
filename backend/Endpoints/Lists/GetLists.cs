@@ -2,20 +2,20 @@ using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Endpoints.Users;
+namespace Api.Endpoints.Lists;
 
-public class GetListsForUser : UsersControllerBase
+public class GetLists : ListsControllerBase
 {
     private readonly ListsContext _database;
 
-    public GetListsForUser(ListsContext database)
+    public GetLists(ListsContext database)
     {
         _database = database;
     }
 
-    [HttpGet("{userId:guid}/lists", Name = "GetListsForUser")]
+    [HttpGet("user/{userId:guid}")]
     public List<ListRecord> Get(
-        [FromQuery] Guid userId)
+        [FromRoute] Guid userId)
     {
         var user = _database.Users.Include(u => u.Lists).Single(u => u.Id == userId);
         return user.Lists;
