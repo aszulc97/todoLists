@@ -1,4 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { ListItemStatus, UpdateStatusRequest } from "./types";
 
 export const queryKeys = {
   users: ["users"],
@@ -25,3 +26,20 @@ export const useListById = (listId: string) =>
     queryFn: () => fetch(`/api/lists/${listId}`).then((res) => res.json()),
     enabled: !!listId,
   });
+
+export const useUpdateItemStatus = (listId: string, listItemId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (status: ListItemStatus) =>
+      fetch(`/api/list-items/${listItemId}/status`, {
+        method: "PUT",
+        body: JSON.stringify(status),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json()),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.listById(listId) });
+    },
+  });
+};
